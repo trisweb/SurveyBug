@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Date:</b>
+  <%= @result.date %>
+</p>
+
+<p>
+  <b>Username:</b>
+  <%= @result.username %>
+</p>
+
+<p>
+  <b>Email:</b>
+  <%= @result.email %>
+</p>
+
+<p>
+  <b>Content:</b>
+  <%= @result.content %>
+</p>
+
+
+<%= link_to 'Edit', edit_result_path(@result) %> |
+<%= link_to 'Back', results_path %>

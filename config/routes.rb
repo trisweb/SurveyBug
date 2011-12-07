@@ -1,4 +1,8 @@
 SurveyBug::Application.routes.draw do
+  resources :results
+
+  resources :surveys
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 
