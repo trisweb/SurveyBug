@@ -15,17 +15,17 @@ Sample survey:
 
 Title: My first survey
 
-1. What is your gender?
-(  ) Male
-(  ) Female
+	1. What is your gender?
+		(  ) Male
+		(  ) Female
 
-2. What are your favorite color(s)?
-[  ] Red
-[  ] Blue
-[  ] Pink
-[  ] Green
+	2. What are your favorite color(s)?
+		[  ] Red
+		[  ] Blue
+		[  ] Pink
+		[  ] Green
 
-[Submit]
+	[Submit]
 
 Assumptions:
 ------------
