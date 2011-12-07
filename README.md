@@ -31,4 +31,6 @@ Assumptions:
 ------------
 
 1. User accounts are not required; a user will simply enter a name to identify themselves when taking a survey.
-2. Results taken before a survey is changed or edited are invalid.
+2. Results from surveys taken before a survey is changed or edited are not promised to be consistent with the latest survey.
+
+
