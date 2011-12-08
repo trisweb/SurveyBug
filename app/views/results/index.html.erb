@@ -1,4 +1,4 @@
-<h1>Listing results for "<%= @survey.name %>"</h1>
+<h2>Listing results for "<%= @survey.name %>"</h2>
 
 <table>
   <tr>
@@ -26,6 +26,6 @@
 
 <br />
 
-<p><%= link_to 'New Result', new_result_path %></p>
+<p><%= link_to "Take this Survey", take_survey_path(@survey)%>
 
 <p><%= link_to "< Back to Surveys", surveys_path %></p>
