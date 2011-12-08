@@ -87,6 +87,7 @@ class SurveysController < ApplicationController
     respond_to do |format|
       format.html { redirect_to(surveys_url) }
       format.xml  { head :ok }
+      format.js { render :text => "alert('Survey removed.')" }
     end
   end
 end

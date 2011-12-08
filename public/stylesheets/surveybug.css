@@ -1,0 +1,58 @@
+
+html {
+	background-color: #E6E6E6;
+}
+
+body {
+	margin: 15px 20%;
+	padding: 20px;
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+	font-family: Helvetica, Arial, sans-serif;
+	background-image:url('/images/logo.png');
+	background-repeat:no-repeat;
+	background-position: right top;
+}
+
+hr {
+	border: 0px;
+	border-top: 1px solid #CCC;
+	height: 1px;
+}
+
+#save_message {
+	padding: 5px;
+	width: 50%;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	font-weight: bold;
+	color: #333;
+	min-height: 1em;
+}
+
+table.survey_list {
+	background-color: #DEDEDE;
+	width: 100%;
+	margin-top: 1em;
+}
+
+th {
+	background-color: #E6E6E6;
+	padding: 1px 3px;
+	font-weight: bold;
+	text-align: left;
+}
+
+td {
+	background-color: #FCFCFC;
+	font-weight: normal;
+	text-align: left;
+	padding: 3px;
+}
+
+td.action {
+	background-color: #FFFFFF;
+	width: 50px;
+}

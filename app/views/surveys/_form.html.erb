@@ -1,8 +1,28 @@
-<%= form_for(@survey) do |f| %>
+<script type="text/javascript">
+$(document).ready(function(){
+	msg = $('#save_message')
+	$('.edit_survey')
+	.bind('ajax:beforeSend', function(){
+		msg.css('background-color', '#FFF6CC').html("Saving...").animate({opacity:1},200)
+	})
+	.bind('ajax:success', function(){
+		msg.css('background-color', '#CCFFCC').html("Saved!").delay(500).animate({opacity:0})
+	})
+	.bind('ajax:error', function(){
+		msg.css('background-color', '#FFCCCC').html("Saved!").css('opacity', 1)
+	})
+	.bind('ajax:complete', function(){
+		
+	})
+	;
+});
+</script>
+
+<%= form_for(@survey, :remote => true) do |f| %>
+  <div id="save_message"></div>
   <% if @survey.errors.any? %>
     <div id="error_explanation">
-      <h2><%= pluralize(@survey.errors.count, "error") %> prohibited this survey from being saved:</h2>
-
+      <h2><%= pluralize(@survey.errors.count, "error") %> occurred during save:</h2>
       <ul>
       <% @survey.errors.full_messages.each do |msg| %>
         <li><%= msg %></li>
@@ -20,6 +40,6 @@
     <%= f.text_field :description %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit "Save Survey", :disable_with => "Saving...", :class => "submit_button" %>
   </div>
 <% end %>
