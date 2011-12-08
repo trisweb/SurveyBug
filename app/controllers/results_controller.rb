@@ -2,7 +2,13 @@ class ResultsController < ApplicationController
   # GET /results
   # GET /results.xml
   def index
-    @results = Result.all
+    @survey = Survey.find(params[:survey_id])
+    
+    if @survey
+      @results = Result.all # Find by survey id
+    else
+      @results = Result.all
+    end
 
     respond_to do |format|
       format.html # index.html.erb

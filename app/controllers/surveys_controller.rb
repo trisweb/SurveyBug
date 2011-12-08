@@ -20,6 +20,15 @@ class SurveysController < ApplicationController
       format.xml  { render :xml => @survey }
     end
   end
+  
+  # GET /surveys/1/take
+  def take
+    @survey = Survey.find(params[:id])
+
+    respond_to do |format|
+      format.html # take.html.erb
+    end
+  end
 
   # GET /surveys/new
   # GET /surveys/new.xml

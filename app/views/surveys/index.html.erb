@@ -1,4 +1,7 @@
-<h1>Listing surveys</h1>
+<h1>SurveyBug</h1>
+<h2>Create surveys and collect results quickly and easily!</h2>
+
+<%= link_to 'Create New Survey', new_survey_path %>
 
 <table>
   <tr>
@@ -13,8 +16,9 @@
   <tr>
     <td><%= survey.name %></td>
     <td><%= survey.description %></td>
-    <td><%= link_to 'Show', survey %></td>
     <td><%= link_to 'Edit', edit_survey_path(survey) %></td>
+	<td><%= link_to 'Take', take_survey_path(survey) %></td>
+	<td><%= link_to 'Results', survey_results_path(survey) %></td>
     <td><%= link_to 'Destroy', survey, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>

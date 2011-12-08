@@ -1,7 +1,18 @@
 SurveyBug::Application.routes.draw do
+  
   resources :results
-
-  resources :surveys
+  
+  resources :surveys do
+    resources :results
+    
+    member do
+      get 'take'
+    end
+  end
+  
+  #match 'surveys/:id/take' => 'surveys#take', :as => :take_survey
+  
+  root :to => 'surveys#index'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
