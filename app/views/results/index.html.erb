@@ -1,31 +1,39 @@
-<h2>Listing results for "<%= @survey.name %>"</h2>
+<h2>Listing results for <%= @survey.nil? ? "all surveys" : "\"#{@survey.name}\"" %></h2>
 
 <table>
   <tr>
+	<% if @survey.nil? %>
+	<th>Survey Name</th>
+	<% end %>
     <th>Date</th>
     <th>Username</th>
     <th>Email</th>
     <th>Content</th>
-    <th></th>
-    <th></th>
-    <th></th>
+    <th colspan="2">Actions</th>
   </tr>
 
 <% @results.each do |result| %>
+  <%
+	survey = @survey || result.survey
+  %>
   <tr>
+	<% if @survey.nil? %>
+	<td><%= result.survey.name %></td>
+	<% end %>
     <td><%= result.date %></td>
     <td><%= result.username %></td>
     <td><%= result.email %></td>
     <td><%= result.content %></td>
-    <td><%= link_to 'Show', result %></td>
-    <td><%= link_to 'Edit', edit_result_path(result) %></td>
-    <td><%= link_to 'Destroy', result, :confirm => 'Are you sure?', :method => :delete %></td>
+    <td class="action"><%= link_to 'View', result %></td>
+    <td class="action"><%= link_to 'Remove', result, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
 <% end %>
 </table>
 
 <br />
 
-<p><%= link_to "Take this Survey", take_survey_path(@survey)%>
+<% if @survey %>
+<p><strong><%= link_to "Take this Survey", take_survey_path(@survey)%></strong></p>
+<% end %>
 
 <p><%= link_to "< Back to Surveys", surveys_path %></p>

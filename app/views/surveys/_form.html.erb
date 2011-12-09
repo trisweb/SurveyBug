@@ -4,6 +4,7 @@ $(document).ready(function(){
 	$('.edit_survey')
 	.bind('ajax:beforeSend', function(){
 		msg.css('background-color', '#FFF6CC').html("Saving...").animate({opacity:1},200)
+		
 	})
 	.bind('ajax:success', function(){
 		msg.css('background-color', '#CCFFCC').html("Saved!").delay(500).animate({opacity:0})
@@ -13,12 +14,12 @@ $(document).ready(function(){
 	})
 	.bind('ajax:complete', function(){
 		
-	})
-	;
+	});
+
 });
 </script>
 
-<%= form_for(@survey, :remote => true) do |f| %>
+<%= form_for(@survey, :remote => (defined?(remote_form) ? remote_form : true)) do |f| %>
   <div id="save_message"></div>
   <% if @survey.errors.any? %>
     <div id="error_explanation">
@@ -31,15 +32,23 @@ $(document).ready(function(){
     </div>
   <% end %>
 
+  <%= f.hidden_field :survey_data %>
+
   <div class="field">
     <%= f.label :name %><br />
-    <%= f.text_field :name %>
+    <%= f.text_field :name, :size => 70 %>
   </div>
   <div class="field">
     <%= f.label :description %><br />
-    <%= f.text_field :description %>
+    <%= f.text_area :description, :rows => 4, :cols => 65 %>
   </div>
+
+
+  <% render "survey_editor" %>
+
+
   <div class="actions">
     <%= f.submit "Save Survey", :disable_with => "Saving...", :class => "submit_button" %>
   </div>
+
 <% end %>

@@ -9,7 +9,16 @@
 </head>
 <body>
 
+<div id="container">
 <%= yield %>
+
+</div>
+
+<div id="footer">
+	<%= link_to "Home", surveys_path %>	 
+	| Created by <a href="mailto:trisweb@gmail.com">Tristan Harward</a> 
+	for <a href="http://www.socialsci.com">SocialSci</a>
+</div>
 
 </body>
 </html>

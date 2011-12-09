@@ -1,9 +1,10 @@
 
-html {
-	background-color: #E6E6E6;
-}
+html { background-color: #E6E6E6; }
 
-body {
+body { 	background-color: #E6E6E6; } /* Overrides scaffold.css... should merge. */
+
+#container {
+	background-color: #FFFFFF;
 	margin: 15px 20%;
 	padding: 20px;
 	-webkit-border-radius: 15px;
@@ -14,6 +15,20 @@ body {
 	background-repeat:no-repeat;
 	background-position: right top;
 }
+
+#footer {
+	color: #AAA;
+	font-size: 85%;
+	margin: 15px 20%;
+	padding: 10px 20px;
+	-webkit-border-radius: 15px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+	background-color: #FAFAFA;
+}
+
+#footer a { color: #999; text-decoration: none; }
+#footer a:hover { color: #FF3300; text-decoration: underline; }
 
 hr {
 	border: 0px;
@@ -32,7 +47,7 @@ hr {
 	min-height: 1em;
 }
 
-table.survey_list {
+table {
 	background-color: #DEDEDE;
 	width: 100%;
 	margin-top: 1em;
@@ -52,7 +67,14 @@ td {
 	padding: 3px;
 }
 
-td.action {
-	background-color: #FFFFFF;
-	width: 50px;
+td.action { background-color: #FFFFFF; }
+
+div#surveyeditor {
+	background-color: #EFEFEF;
+	-webkit-border-radius: 10px;
+	-moz-border-radius: 10px;
+	border-radius: 10px;
+	
+	padding: 12px 6px;
+	
 }

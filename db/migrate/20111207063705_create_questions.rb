@@ -1,7 +1,6 @@
 class CreateQuestions < ActiveRecord::Migration
   def self.up
     create_table :questions do |t|
-
       t.timestamps
     end
   end

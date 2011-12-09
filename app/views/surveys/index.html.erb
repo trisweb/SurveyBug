@@ -1,9 +1,11 @@
 <h1>SurveyBug</h1>
 <h2>Create surveys and collect results quickly and easily!</h2>
 
-<%= link_to 'Create New Survey', new_survey_path %>
+<p><strong><%= link_to 'Create New Survey', new_survey_path %></strong></p>
 
 <hr />
+
+<h3>Available Surveys:</h3>
 
 <table class="survey_list">
   <tr>
@@ -14,10 +16,10 @@
 
 <% @surveys.each do |survey| %>
   <tr>
-    <td><strong><%= link_to survey.name, take_survey_path(survey) %></strong></td>
-    <td><%= survey.description %></td>
-    <td class="action"><%= link_to 'Edit', edit_survey_path(survey) %></td>
+    <td width="25%"><strong><%= link_to survey.name, take_survey_path(survey) %></strong></td>
+    <td width="50%"><%= survey.description %></td>
 	<td class="action"><%= link_to 'Take', take_survey_path(survey) %></td>
+    <td class="action"><%= link_to 'Edit', edit_survey_path(survey) %></td>
 	<td class="action"><strong><%= link_to 'Results', survey_results_path(survey) %></strong></td>
     <td class="action"><%= link_to 'Remove', survey, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
@@ -26,4 +28,7 @@
 
 <br />
 
-<%= link_to 'Create New Survey', new_survey_path %>
+<p><%= link_to 'Create New Survey', new_survey_path %></p>
+
+<p><%= link_to 'View All Results', results_path %>
+
