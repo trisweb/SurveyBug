@@ -52,3 +52,4 @@ ToDo:
 * Saving the actual Survey form the user creates using the editor.
 * Taking surveys: generate a form based on the Survey Question and Option structure, and store results.
 * Unit tests for the above (for question and option saving, and handling new survey results)
+* More graphical elements (better iconography, better shading, etc.)
