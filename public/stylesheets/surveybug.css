@@ -36,7 +36,7 @@ hr {
 	height: 1px;
 }
 
-#save_message {
+.save_message {
 	padding: 5px;
 	width: 50%;
 	-webkit-border-radius: 10px;
@@ -70,11 +70,98 @@ td {
 td.action { background-color: #FFFFFF; }
 
 div#surveyeditor {
+	margin-bottom: 1em;
+	
 	background-color: #EFEFEF;
 	-webkit-border-radius: 10px;
 	-moz-border-radius: 10px;
 	border-radius: 10px;
 	
 	padding: 12px 6px;
-	
+}
+
+div#surveyeditor h3 { margin-top: 0px }
+
+#survey_item_templates {
+	display: none;
+}
+
+.survey-question {
+	padding: 3px;
+	margin-bottom: 7px;
+}
+.survey-question input {
+	background-color: #FCFCFC;
+	font-weight: bold;
+	font-size: 110%;
+}
+
+.survey-question-options {
+	padding: 10px 4px 4px;
+	background-color: #FFF;
+	margin: 7px 10px 4px 26px;
+	border-left: 4px solid #CCC;
+	border-bottom: 1px solid #CCC;
+}
+
+.survey-question-option {
+	padding: 2px;
+	margin-bottom: 2px;
+}
+
+.survey-question-options input {
+	background-color: #F0F0F0;
+	font-weight: normal;
+	font-size: 95%;
+}
+
+.survey-question-options .new-option-box {
+	margin-left: 30px;
+	color: #CCC;
+}
+
+.drag-handle {
+	/* TODO: Image to make it clear it's a drag handle. */
+	display: block;
+	float: left;
+	margin-top: 3px;
+	margin-right: 7px;
+	background-color: #CCC;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	width: 18px;
+	height: 18px;
+}
+
+.drag-handle-sm {
+	/* TODO: Image to make it clear it's a drag handle. */
+	display: block;
+	float: left;
+	margin-top: 3px;
+	margin-right: 7px;
+	margin-left: 4px;
+	background-color: #CCC;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	border-radius: 5px;
+	width: 15px;
+	height: 15px;
+}
+
+
+.remove-button-sm {
+	border: 0px;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	font-weight: bold !important;
+	color: #990000;
+	background-color: #FFF2F2 !important;
+	height: 18px;
+	padding-top: 0px;
+	font-size: 9pt !important;
+}
+.remove-button-sm:hover {
+	background-color: #FFD3D3 !important;
 }

@@ -31,6 +31,24 @@ Assumptions:
 ------------
 
 1. User accounts are not required; a user will simply enter a name to identify themselves when taking a survey.
-2. Results from surveys taken before a survey is changed or edited are not promised to be consistent with the latest survey.
+2. Results from surveys taken before a survey is changed or edited are not promised to be consistent with the format or content of the latest survey.
+3. General focus is on the UI and front-end abilities for editing and taking surveys. Results viewing and admin tasks are less important.
 
+Status:
+--------
 
+12/9/2011
+---------
+
+Done:
+
+* All simple data model operations are complete (Create, List, View, Edit Surveys, List/view Results, etc.)
+* Simple clean graphical layout.
+* AJAX-based submission of Survey changes.
+* Javascript-based dynamic editing of Surveys (Note: Does not yet save)
+
+ToDo:
+
+* Saving the actual Survey form the user creates using the editor.
+* Taking surveys: generate a form based on the Survey Question and Option structure, and store results.
+* Unit tests for the above (for question and option saving, and handling new survey results)

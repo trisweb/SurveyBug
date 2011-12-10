@@ -1,26 +1,40 @@
 <script type="text/javascript">
 $(document).ready(function(){
-	msg = $('#save_message')
+	
+	msg = $('.save_message')
 	$('.edit_survey')
-	.bind('ajax:beforeSend', function(){
-		msg.css('background-color', '#FFF6CC').html("Saving...").animate({opacity:1},200)
+	.bind('ajax:before', function(){
+		// Display "saving" in-progress status.
+		survey_data = generateSurveyData();
+		survey_data = JSON.stringify(survey_data);
 		
+		$("#survey_survey_data").attr("value", survey_data);
+		msg.css('background-color', '#FFF6CC').html("Saving...").animate({opacity:1},200)
 	})
 	.bind('ajax:success', function(){
+		// Flash the status.
 		msg.css('background-color', '#CCFFCC').html("Saved!").delay(500).animate({opacity:0})
 	})
-	.bind('ajax:error', function(){
-		msg.css('background-color', '#FFCCCC').html("Saved!").css('opacity', 1)
+	.bind('ajax:error', function(xhr, status, error){
+		// Flash the error and keep it up until re-submitted.
+		msg.css('background-color', '#FFCCCC').html("Error: "+status.statusText).css('opacity', 1)
 	})
 	.bind('ajax:complete', function(){
-		
+		// Clean-up if needed.
+	});
+	
+	$('#survey_name').keyup(function(e) {
+		// Update the title of the page.
+		$('#edit_title').html("Editing survey \""+$('#survey_name').attr("value")+"\"");
 	});
 
 });
 </script>
 
-<%= form_for(@survey, :remote => (defined?(remote_form) ? remote_form : true)) do |f| %>
-  <div id="save_message"></div>
+<% is_new_form = defined?(new_form) && new_form %>
+
+<%= form_for(@survey, :remote => (is_new_form ? false : true)) do |f| %>
+  <div class="save_message"></div>
   <% if @survey.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@survey.errors.count, "error") %> occurred during save:</h2>
@@ -43,12 +57,18 @@ $(document).ready(function(){
     <%= f.text_area :description, :rows => 4, :cols => 65 %>
   </div>
 
+  <div class="actions">
+    <%= f.submit "Save Survey", :disable_with => "Saving...", :class => "submit_button" %>
+  </div>
 
-  <% render "survey_editor" %>
+  <% if !is_new_form %>
+    <%= render "survey_editor" %>
+  <% end %>
 
 
   <div class="actions">
     <%= f.submit "Save Survey", :disable_with => "Saving...", :class => "submit_button" %>
   </div>
 
+  <div class="save_message"></div>
 <% end %>

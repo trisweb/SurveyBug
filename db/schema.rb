@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20111209194247) do
+ActiveRecord::Schema.define(:version => 20111209203817) do
 
   create_table "options", :force => true do |t|
     t.datetime "created_at"
@@ -27,6 +27,7 @@ ActiveRecord::Schema.define(:version => 20111209194247) do
     t.integer  "order"
     t.text     "text"
     t.integer  "survey_id"
+    t.text     "kind"
   end
 
   create_table "results", :force => true do |t|

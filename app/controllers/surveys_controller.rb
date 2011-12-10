@@ -53,7 +53,7 @@ class SurveysController < ApplicationController
 
     respond_to do |format|
       if @survey.save
-        format.html { redirect_to(@survey, :notice => 'Survey was successfully created.') }
+        format.html { redirect_to(@survey, :action => "edit", :notice => 'Survey was successfully created.') }
         format.xml  { render :xml => @survey, :status => :created, :location => @survey }
       else
         format.html { render :action => "new" }
@@ -66,14 +66,22 @@ class SurveysController < ApplicationController
   # PUT /surveys/1.xml
   def update
     @survey = Survey.find(params[:id])
-
+    success = @survey.update_attributes(params[:survey])
+    
+    # Load the JSON Survey form data.
+    survey_questions = ActiveSupport::JSON.decode(@survey.survey_data)
+    y survey_questions
+    
+    # Render a response.
     respond_to do |format|
-      if @survey.update_attributes(params[:survey])
+      if success
         format.html { redirect_to(@survey, :notice => 'Survey was successfully updated.') }
         format.xml  { head :ok }
+        format.js { head :ok}
       else
         format.html { render :action => "edit" }
         format.xml  { render :xml => @survey.errors, :status => :unprocessable_entity }
+        format.js { render :json => @survey.errors, :status => :error }
       end
     end
   end

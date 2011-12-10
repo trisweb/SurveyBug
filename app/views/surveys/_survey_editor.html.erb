@@ -1,8 +1,150 @@
 <script type="text/javascript">
-
+	$(document).ready(function() {
+		$("#survey_questions" ).sortable({opacity:0.75});
+		$(".survey-question-options").sortable({opacity:0.75, items: 'div'});
+		
+		$(".new-option-box").focusin(function(e) { e.target.value = "" });
+		$(".new-option-box").focusout(function(e) { e.target.value = "Add new option..." });
+		
+		// Somewhat complicated way to detect an "Enter" keypress, and find the next
+		// text field to focus. Allows for quick entry of Options by pressing enter to create a new option.
+		$(".option-text,.new-option-box").keypress(function(e) {
+		    if (e.keyCode == 13) {
+				foundSelf = false;
+				$("#survey_questions").find(".option-text,.new-option-box").each(function(i, item) {
+					if (foundSelf) {
+						$(item).focus();
+						return false;
+					} else if (item == e.target) {
+						foundSelf = true;
+					}
+				});
+		        e.preventDefault();
+				return false;
+		    }
+		});
+		
+		// If a user types in the New Option field, create a new option and transfer them to it.
+		$(".new-option-box").keyup(function(e) { 
+			// Create a new item, copy that first character, and focus on it. Seamless.
+			if (e.target.value) {
+				newOption = $("#new_option_template").clone(true);
+				$(e.target).before(newOption);
+				optionText = newOption.find(".option-text");
+				optionText.attr("value", e.target.value);
+				optionText.focus();
+			}
+		});
+	});
+	
+	function addQuestion(event) {
+		newQuestion = $("#new_question_template").clone(true);
+		newQuestion.appendTo($('#survey_questions'));
+		newQuestion.find(".question-text").focus();
+	}
+	
+	// Remove an option for a given question (called on press of red X button next to option)
+	function removeOption(event) {
+		event.target.parentNode.parentNode.removeChild(event.target.parentNode);
+	}
+	
+	// Remove an entire question (called on press of red X button next to Question title)
+	// Confirms removal.
+	function removeQuestion(event) {
+		if (confirm("Are you sure you want to remove this Question?")) {
+			event.target.parentNode.parentNode.removeChild(event.target.parentNode);
+		}
+	}
+	
+	// Serialize the survey data and place in hidden field for automatic AJAX transfer.
+	function generateSurveyData() {
+		survey_data = []
+		// Wrap it all up in JSON to be sent. Place in hidden field 'survey_data', in the parent page.
+		$("#survey_questions").children(".survey-question").each(function(i, question) {
+			question_obj = {}
+			question_obj['text'] = $(question).find('.question-text').first().attr('value');
+			question_obj['kind'] = $(question).find('.question-kind').first().attr('value');
+			survey_data.push(question_obj);
+		});
+		return survey_data;
+	}
 </script>
 
 <div id="surveyeditor">
+	<h3>Questions:</h3>
+	
+	<div id="survey_questions">
+		<%
+			# Iterate through the questions for this survey
+			# The survey-editor javascript is based directly on the DOM structure, so no separate data structure is required.
+			# What is displayed is always exactly what gets sent.
+			
+			@survey.questions.each do |question|
+		%>
+			<div class="survey-question">
+				<span class="drag-handle"></span>
+				<input class="question-text" type="text" size="50" name="question-<%= question.id %>-name" value="<%= question.text %>" />
+				
+				<select name="question-kind" class="question-kind">
+					<option value="radio"<%= question.kind == 'radio' ? ' selected="selected"' : ""%>>Radio Button</option>
+					<option value="checkbox"<%= question.kind == 'checkbox' ? ' selected="selected"' : ''%>>Checkbox</option>
+				</select>
+				
+				<input type="button" value="x" onclick="removeQuestion(event)" class="remove-button-sm" tabindex="0">
+				
+				<div class="survey-question-options">
+					<% question.options.each do |option| %>
+						<div class="survey-question-option">
+							<span class="drag-handle-sm"></span>
+							<input type="text" size="40" value="<%= option.text %>" class="option-text" />
+							<input type="button" value="x" onclick="removeOption(event)" class="remove-button-sm" tabindex="0">
+						</div>
+					<% end %>
+					<input type="text" size="40" value="Add new option..." class="new-option-box">
+				</div>
+				
+			</div>
+		<%
+			end
+		%>
+	</div>
+	
+	<!-- 
+	The following templates will be copied to create new elements. 
+	I'll admit this is messy and duplicated code - ideally it should be the same HTML above in the iteration, and below
+	for empty items. 
+	
+	One possibility is creating common JS that loads the initial DIVs using the same method
+	as the dynamic creation on the client. 
+	
+	Another option would be to just use an common rails method parameterized
+	to create both the initial DIVs and the empty templates.
+	
+	Option 2 is probably best as it relies less on the client javascript, and the HTML would always be consistent.
+	-->
+	
+	<div id="survey_item_templates">
+		<div class="survey-question" id="new_question_template">
+			<span class="drag-handle"></span>
+			<input type="text" size="50" name="question-new-name" value="" class="question-text" />
+			<select name="question-kind" class="question-kind">
+				<option value="radio">Radio Button</option>
+				<option value="checkbox">Checkbox</option>
+			</select>
+			<input type="button" value="x" onclick="removeQuestion(event)" class="remove-button-sm">
+			
+			<div class="survey-question-options">
+				<input type="text" size="40" value="Add new option..." class="new-option-box">
+			</div>
+		</div>
+		
+		<div class="survey-question-option" id="new_option_template">
+			<span class="drag-handle-sm"></span>
+			<input type="text" size="40" value="" class="option-text" />
+			<input type="button" value="x" onclick="removeOption(event)" class="remove-button-sm" />
+		</div>
+	</div>
 	
 	
+	<input type="button" id="add_question_button" onclick="addQuestion()" value="+ Add a Question" />
 </div>
