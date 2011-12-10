@@ -54,3 +54,4 @@ ToDo:
 * Unit tests for the above (for question and option saving, and handling new survey results)
 * More graphical elements (better iconography, better shading, etc.)
 * (Minor) Figure out how to commit the results of the Survey Editor from the New page as well (currently simple New page directs to the Edit page, where you can then add questions).
+* (Minor) It may not be obvious that Survey questions and options are draggable for reordering. Provide imagery to clarify.
