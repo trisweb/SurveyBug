@@ -53,3 +53,4 @@ ToDo:
 * Taking surveys: generate a form based on the Survey Question and Option structure, and store results.
 * Unit tests for the above (for question and option saving, and handling new survey results)
 * More graphical elements (better iconography, better shading, etc.)
+* (Minor) Figure out how to commit the results of the Survey Editor from the New page as well (currently simple New page directs to the Edit page, where you can then add questions).
