@@ -3,6 +3,13 @@ SurveyBug
 
 A simple survey generator and administrator.
 
+Requirements:
+-------------
+
+Same as requirements for Rails 3.0.11 - Ruby 1.9.2 is preferred, but 1.8.7+ works.
+
+Run `rails server` to start.
+
 Specifications:
 ---------------
 
