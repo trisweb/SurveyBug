@@ -63,12 +63,14 @@ $(document).ready(function(){
 
   <% if !is_new_form %>
     <%= render "survey_editor" %>
+
+	<div class="actions">
+		<%= f.submit "Save Survey", :disable_with => "Saving...", :class => "submit_button" %>
+	</div>
+
   <% end %>
 
 
-  <div class="actions">
-    <%= f.submit "Save Survey", :disable_with => "Saving...", :class => "submit_button" %>
-  </div>
 
   <div class="save_message"></div>
 <% end %>
