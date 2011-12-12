@@ -68,9 +68,12 @@ class SurveysController < ApplicationController
     @survey = Survey.find(params[:id])
     success = @survey.update_attributes(params[:survey])
     
+    puts "UPDATE: Survey:#{@survey.id} - #{@survey.name}"
     # Load the JSON Survey form data.
     survey_questions = ActiveSupport::JSON.decode(@survey.survey_data)
-    y survey_questions
+    #y survey_questions
+    
+    update_questions(@survey, survey_questions)
     
     # Render a response.
     respond_to do |format|
@@ -98,4 +101,33 @@ class SurveysController < ApplicationController
       format.js { render :text => "alert('Survey removed.')" }
     end
   end
+  
+  private
+    def clean_existing_questions!(survey)
+      survey.questions.each do |question|
+        question.options.each do |opt|
+          opt.destroy
+        end
+        question.destroy
+      end
+    end
+    
+    def update_questions(survey, json_questions)
+      clean_existing_questions!(survey)
+      json_questions.each_with_index do |json_question, i|
+        question = Question.new(:survey => survey)
+        question.text = json_question['text']
+        question.kind = json_question['kind']
+        question.order = i
+        puts "[Creating Question] #{question.kind}, '#{question.text}'"
+        question.save!
+        json_question["options"].each_with_index do |json_opt, ii|
+          option = Option.new(:question => question)
+          option.text = json_opt
+          option.order = ii
+          puts "  [Option] #{option.text}"
+          option.save!
+        end
+      end
+    end
 end

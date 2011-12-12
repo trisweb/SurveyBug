@@ -29,24 +29,39 @@
 			// Create a new item, copy that first character, and focus on it. Seamless.
 			if (e.target.value) {
 				newOption = $("#new_option_template").clone(true);
+				newOption.removeAttr("id");
 				$(e.target).before(newOption);
 				optionText = newOption.find(".option-text");
 				optionText.attr("value", e.target.value);
+				$(".survey-question-options").sortable({opacity:0.75, items: 'div'});
+				$(".survey-question-options").sortable("refresh")
 				optionText.focus();
 			}
 		});
+		
+		// Add event handlers.
+		
+		$("#add_question_button").click(addQuestion);
+		$(".remove-option-button").click(removeOption);
+		$(".remove-question-button").click(removeQuestion);
 	});
+	
+	// END Document.ready. Begin function definitions.
 	
 	function addQuestion(event) {
 		newQuestion = $("#new_question_template").clone(true);
+		newQuestion.removeAttr("id");
 		newQuestion.appendTo($('#survey_questions'));
 		newQuestion.find(".question-text").focus();
+		$(".survey-question-options").sortable({opacity:0.75, items: 'div'});
 	}
+	
 	
 	// Remove an option for a given question (called on press of red X button next to option)
 	function removeOption(event) {
 		event.target.parentNode.parentNode.removeChild(event.target.parentNode);
 	}
+	
 	
 	// Remove an entire question (called on press of red X button next to Question title)
 	// Confirms removal.
@@ -56,6 +71,7 @@
 		}
 	}
 	
+	
 	// Serialize the survey data and place in hidden field for automatic AJAX transfer.
 	function generateSurveyData() {
 		survey_data = []
@@ -64,10 +80,12 @@
 			question_obj = {}
 			question_obj['text'] = $(question).find('.question-text').first().attr('value');
 			question_obj['kind'] = $(question).find('.question-kind').first().attr('value');
+			question_obj['options'] = $(question).find('.option-text').map(function(i, obj) { return obj.value; }).toArray();
 			survey_data.push(question_obj);
 		});
 		return survey_data;
 	}
+	
 </script>
 
 <div id="surveyeditor">
@@ -79,7 +97,7 @@
 			# The survey-editor javascript is based directly on the DOM structure, so no separate data structure is required.
 			# What is displayed is always exactly what gets sent.
 			
-			@survey.questions.each do |question|
+			@survey.questions.sort{|a,b| a.order <=> b.order}.each do |question|
 		%>
 			<div class="survey-question">
 				<span class="drag-handle"></span>
@@ -90,14 +108,14 @@
 					<option value="checkbox"<%= question.kind == 'checkbox' ? ' selected="selected"' : ''%>>Checkbox</option>
 				</select>
 				
-				<input type="button" value="x" onclick="removeQuestion(event)" class="remove-button-sm" tabindex="0">
+				<input type="button" value="x" class="remove-question-button" tabindex="0">
 				
 				<div class="survey-question-options">
-					<% question.options.each do |option| %>
+					<% question.options.sort{|a,b| a.order <=> b.order}.each do |option| %>
 						<div class="survey-question-option">
 							<span class="drag-handle-sm"></span>
 							<input type="text" size="40" value="<%= option.text %>" class="option-text" />
-							<input type="button" value="x" onclick="removeOption(event)" class="remove-button-sm" tabindex="0">
+							<input type="button" value="x" class="remove-option-button" tabindex="0">
 						</div>
 					<% end %>
 					<input type="text" size="40" value="Add new option..." class="new-option-box">
@@ -111,16 +129,17 @@
 	
 	<!-- 
 	The following templates will be copied to create new elements. 
-	I'll admit this is messy and duplicated code - ideally it should be the same HTML above in the iteration, and below
-	for empty items. 
+	I'll admit this is messy and duplicated code - ideally it should be the same HTML above in the 
+	iteration, and below for empty items. 
 	
 	One possibility is creating common JS that loads the initial DIVs using the same method
 	as the dynamic creation on the client. 
 	
-	Another option would be to just use an common rails method parameterized
-	to create both the initial DIVs and the empty templates.
+	Another option would be to just use a common rails method parameterized to create both the initial 
+	DIVs and the empty templates.
 	
-	Option 2 is probably best as it relies less on the client javascript, and the HTML would always be consistent.
+	Option 2 is probably best as it relies less on the client javascript, and the HTML would always be 
+	consistent.
 	-->
 	
 	<div id="survey_item_templates">
@@ -131,7 +150,7 @@
 				<option value="radio">Radio Button</option>
 				<option value="checkbox">Checkbox</option>
 			</select>
-			<input type="button" value="x" onclick="removeQuestion(event)" class="remove-button-sm">
+			<input type="button" value="x" class="remove-question-button">
 			
 			<div class="survey-question-options">
 				<input type="text" size="40" value="Add new option..." class="new-option-box">
@@ -141,10 +160,10 @@
 		<div class="survey-question-option" id="new_option_template">
 			<span class="drag-handle-sm"></span>
 			<input type="text" size="40" value="" class="option-text" />
-			<input type="button" value="x" onclick="removeOption(event)" class="remove-button-sm" />
+			<input type="button" value="x" class="remove-option-button" />
 		</div>
 	</div>
 	
 	
-	<input type="button" id="add_question_button" onclick="addQuestion()" value="+ Add a Question" />
+	<input type="button" id="add_question_button" value="+ Add a Question" />
 </div>

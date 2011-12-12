@@ -132,6 +132,7 @@ div#surveyeditor h3 { margin-top: 0px }
 	border-radius: 5px;
 	width: 18px;
 	height: 18px;
+	cursor: move;
 }
 
 .drag-handle-sm {
@@ -147,10 +148,11 @@ div#surveyeditor h3 { margin-top: 0px }
 	border-radius: 5px;
 	width: 15px;
 	height: 15px;
+	cursor: move;
 }
 
 
-.remove-button-sm {
+.remove-option-button, .remove-question-button {
 	border: 0px;
 	-webkit-border-radius: 8px;
 	-moz-border-radius: 8px;
@@ -162,6 +164,6 @@ div#surveyeditor h3 { margin-top: 0px }
 	padding-top: 0px;
 	font-size: 9pt !important;
 }
-.remove-button-sm:hover {
+.remove-option-button:hover, .remove-question-button:hover {
 	background-color: #FFD3D3 !important;
 }
