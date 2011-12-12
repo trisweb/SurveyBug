@@ -1,6 +1,8 @@
-<h2>Take Survey <%= @survey.name %></h2>
+<h2>Take Survey "<%= @survey.name %>"</h2>
 
 <p id="notice"><%= notice %></p>
+
+<p>URL to send to friends: <strong><%= take_survey_url(@survey) %></strong></p>
 
 <p>
   <b>Name:</b>
@@ -8,10 +10,13 @@
 </p>
 
 <p>
-  <b>Description:</b>
   <%= @survey.description %>
 </p>
 
+<hr />
+
+<%= render 'surveys/take_form' %>
+
 
 <%= link_to 'Edit', edit_survey_path(@survey) %> |
-<%= link_to 'Back', surveys_path %>
+<%= link_to 'Back to List', surveys_path %>

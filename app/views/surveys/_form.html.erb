@@ -1,7 +1,9 @@
 <script type="text/javascript">
 $(document).ready(function(){
 	
-	msg = $('.save_message')
+	msg = $('.save_message');
+	msg.css('opacity', 0);
+	
 	$('.edit_survey')
 	.bind('ajax:before', function(){
 		// Display "saving" in-progress status.
@@ -33,8 +35,8 @@ $(document).ready(function(){
 
 <% is_new_form = defined?(new_form) && new_form %>
 
-<%= form_for(@survey, :remote => (is_new_form ? false : true)) do |f| %>
-  <div class="save_message"></div>
+<%= form_for(@survey, :remote => !is_new_form) do |f| %>
+  <div class="save_message">x</div>
   <% if @survey.errors.any? %>
     <div id="error_explanation">
       <h2><%= pluralize(@survey.errors.count, "error") %> occurred during save:</h2>
@@ -72,5 +74,5 @@ $(document).ready(function(){
 
 
 
-  <div class="save_message"></div>
+  <div class="save_message">x</div>
 <% end %>

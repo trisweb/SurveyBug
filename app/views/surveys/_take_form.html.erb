@@ -1,0 +1,56 @@
+<%= form_for(@result) do |f| %>
+  <% if @result && @result.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@result.errors.count, "error") %> occurred during save:</h2>
+      <ul>
+      <% @result.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= f.hidden_field :survey_id, :value => @survey.id %>
+
+  <div class="field">
+    <%= f.label :username, "Full Name" %><br />
+    <%= f.text_field :username, :size => 55 %>
+  </div>
+  <div class="field">
+    <%= f.label :email, "E-Mail Address" %><br />
+    <%= f.text_field :email, :size => 55 %>
+  </div>
+
+
+	<div id="survey_questions">
+		<%
+			# Iterate through the questions for this survey
+			
+			@survey.questions.sort{|a,b| a.order <=> b.order}.each_with_index do |question, i|
+		%>
+			<input type="hidden" name="question-<%=i%>-id" value="<%= question.id %>" />
+			<input type="hidden" name="question-<%=i%>-text" value="<%= question.text %>" />
+			<div class="survey-question">
+				<%= question.text %>
+
+				<div class="survey-question-options">
+					<% question.options.sort{|a,b| a.order <=> b.order}.each_with_index do |option, ii| 
+						fieldname = "question-#{i}-value" + (question.kind == "checkbox" ? "-#{ii}" : '')
+						%>
+						<input type="<%= question.kind %>" value="<%= option.text %>" id="<%= fieldname %>" name="<%= fieldname %>"<%= params[fieldname] == option.text ? " checked='checked'" : "" %>>
+						<label for="<%= fieldname %>"><%= option.text%></label><br />
+					<% end %>
+				</div>
+				
+			</div>
+		<%
+			end
+		%>
+	</div>
+
+
+  <div class="actions">
+    <%= f.submit "Submit Survey", :class => "submit_button" %>
+  </div>
+
+<% end %>

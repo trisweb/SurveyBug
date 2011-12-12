@@ -7,6 +7,7 @@ body { 	background-color: #E6E6E6; } /* Overrides scaffold.css... should merge. 
 	background-color: #FFFFFF;
 	margin: 15px 20%;
 	padding: 20px;
+	padding-top: 30px;
 	-webkit-border-radius: 15px;
 	-moz-border-radius: 15px;
 	border-radius: 15px;
@@ -37,11 +38,15 @@ hr {
 }
 
 .save_message {
-	padding: 5px;
-	width: 50%;
-	-webkit-border-radius: 10px;
-	-moz-border-radius: 10px;
-	border-radius: 10px;
+	padding: 4px 8px;
+	margin: .25em 0px 1em 0px;
+	width: 97%;
+	
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	
+	border: 2px dotted #CCC;
 	font-weight: bold;
 	color: #333;
 	min-height: 1em;
@@ -68,6 +73,19 @@ td {
 }
 
 td.action { background-color: #FFFFFF; }
+
+td.survey-result {
+	background-color: #F6F2FF;
+	padding: 1px;
+}
+td.survey-result ol {
+	font-size: 9pt;
+	margin: 0px;
+	padding: 0px;
+	padding-left: 2em;
+}
+
+label { font-weight: bold; }
 
 div#surveyeditor {
 	margin-bottom: 1em;
@@ -167,3 +185,24 @@ div#surveyeditor h3 { margin-top: 0px }
 .remove-option-button:hover, .remove-question-button:hover {
 	background-color: #FFD3D3 !important;
 }
+
+.submit_button {
+	font-weight: normal;
+	color: #004400;
+	border: 2px dotted #33CC33;
+	-webkit-border-radius: 8px;
+	-moz-border-radius: 8px;
+	border-radius: 8px;
+	background-color: #CCFFCC;
+	font-size: 14pt;
+}
+
+.submit_button:hover, .submit_button:active {
+	background-color: #99EE99;
+}
+
+.submit_button:disabled {
+	background-color: #DDD;
+	border-color: #999;
+}
+

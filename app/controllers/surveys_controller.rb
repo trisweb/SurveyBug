@@ -24,11 +24,13 @@ class SurveysController < ApplicationController
   # GET /surveys/1/take
   def take
     @survey = Survey.find(params[:id])
-
+    @result = Result.new
+    
     respond_to do |format|
       format.html # take.html.erb
     end
   end
+
 
   # GET /surveys/new
   # GET /surveys/new.xml

@@ -2,7 +2,7 @@
 
 <p>
   <b>Date:</b>
-  <%= @result.date %>
+  <%= @result.date.to_s(:long) %>
 </p>
 
 <p>
@@ -17,9 +17,17 @@
 
 <p>
   <b>Content:</b>
-  <%= @result.content %>
+  <ol>
+  <%
+	questions = ActiveSupport::JSON.decode(@result.content)
+	questions.each_with_index do |q, i| %>
+	  <li><strong><%= q["text"] %><br /></strong> <%= q["value"].join(", ") %></li>
+	<% end %>
+  </ol>
 </p>
 
 
-<%= link_to 'Edit', edit_result_path(@result) %> |
 <%= link_to 'Back', results_path %>
+<% if @survey %>
+| <%= link_to 'See All Results for this Survey', survey_results_path(@survey) %>
+<% end %>

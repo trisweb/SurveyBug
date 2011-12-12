@@ -3,27 +3,44 @@
 <table>
   <tr>
 	<% if @survey.nil? %>
-	<th>Survey Name</th>
+	<th>Survey Name (Click to Filter)</th>
 	<% end %>
     <th>Date</th>
-    <th>Username</th>
-    <th>Email</th>
+    <th>Name</th>
+    <th>E-Mail</th>
     <th>Content</th>
     <th colspan="2">Actions</th>
   </tr>
 
-<% @results.each do |result| %>
+<% @results.sort{|a,b| b.date <=> a.date }.each do |result| %>
   <%
 	survey = @survey || result.survey
   %>
   <tr>
 	<% if @survey.nil? %>
-	<td><%= result.survey.name %></td>
+	<td>
+		<% if result.survey %>
+			<%= link_to result.survey.name, survey_results_path(result.survey) %>
+		<% end %>
+	</td>
 	<% end %>
-    <td><%= result.date %></td>
+    <td width="125"><%= result.date.to_s(:short) %></td>
     <td><%= result.username %></td>
-    <td><%= result.email %></td>
-    <td><%= result.content %></td>
+    <td><a href="mailto:<%= result.email %>"><%= result.email %></a></td>
+    <td class="survey-result">
+      <ol>
+	  <%
+		questions = ActiveSupport::JSON.decode(result.content.to_s)
+		if questions
+			questions.each_with_index do |q, i| 
+	  %>
+			  <li><strong><%= q["text"] %>:</strong> <%= q["value"].join(", ") %></li>
+	  <% 
+			end
+		end 
+	  %>
+	  </ol>
+    </td>
     <td class="action"><%= link_to 'View', result %></td>
     <td class="action"><%= link_to 'Remove', result, :confirm => 'Are you sure?', :method => :delete %></td>
   </tr>
@@ -33,7 +50,8 @@
 <br />
 
 <% if @survey %>
-<p><strong><%= link_to "Take this Survey", take_survey_path(@survey)%></strong></p>
+<p><strong><%= link_to "Take this Survey", take_survey_path(@survey) %></strong></p>
+<p><strong><%= link_to "View All Results", results_path %></strong></p>
 <% end %>
 
 <p><%= link_to "< Back to Surveys", surveys_path %></p>

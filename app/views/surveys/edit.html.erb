@@ -1,6 +1,11 @@
 <h1 id="edit_title">Editing survey "<%= @survey.name %>"</h1>
 
+<p>Survey URL to send to friends: <strong><%= take_survey_url(@survey) %></strong></p>
+
 <%= render 'form' %>
+
+
+<p><strong><%= link_to 'Take this survey!', take_survey_path(@survey) %></strong></p>
 
 <%= link_to 'View', @survey %> |
 <%= link_to 'Back', surveys_path %>
