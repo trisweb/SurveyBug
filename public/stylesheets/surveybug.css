@@ -87,6 +87,17 @@ td.survey-result ol {
 
 label { font-weight: bold; }
 
+.largefield label {
+	font-size: 125%;
+}
+
+.largefield input {
+	font-size: 125%;
+	padding: 4px;
+}
+
+
+
 div#surveyeditor {
 	margin-bottom: 1em;
 	
@@ -102,6 +113,11 @@ div#surveyeditor h3 { margin-top: 0px }
 
 #survey_item_templates {
 	display: none;
+}
+
+.take_survey {
+	font-size: 125%;
+	line-height: 120%;
 }
 
 .survey-question {

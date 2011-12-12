@@ -8,10 +8,14 @@
 		
 		// Somewhat complicated way to detect an "Enter" keypress, and find the next
 		// text field to focus. Allows for quick entry of Options by pressing enter to create a new option.
-		$(".option-text,.new-option-box").keypress(function(e) {
+		$(".option-text,.new-option-box,.question-text").keypress(function(e) {
 		    if (e.keyCode == 13) {
 				foundSelf = false;
-				$("#survey_questions").find(".option-text,.new-option-box").each(function(i, item) {
+				elements = $("#survey_questions").find(".option-text,.new-option-box,.question-text");
+				if (e.shiftKey) {
+					elements = $(elements.toArray().reverse());
+				}
+				elements.each(function(i, item) {
 					if (foundSelf) {
 						$(item).focus();
 						return false;
@@ -90,6 +94,8 @@
 
 <div id="surveyeditor">
 	<h3>Questions:</h3>
+	
+	<p><em>Tip: Use Enter and Shift+Enter to navigate between options and questions.</em></p>
 	
 	<div id="survey_questions">
 		<%

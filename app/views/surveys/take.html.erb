@@ -2,8 +2,6 @@
 
 <p id="notice"><%= notice %></p>
 
-<p>URL to send to friends: <strong><%= take_survey_url(@survey) %></strong></p>
-
 <p>
   <b>Name:</b>
   <%= @survey.name %>
@@ -16,6 +14,10 @@
 <hr />
 
 <%= render 'surveys/take_form' %>
+
+<hr />
+
+<p>Want to send this survey to your friends? Send them this URL: <strong><%= take_survey_url(@survey) %></strong></p>
 
 
 <%= link_to 'Edit', edit_survey_path(@survey) %> |

@@ -12,33 +12,32 @@
 
   <%= f.hidden_field :survey_id, :value => @survey.id %>
 
-  <div class="field">
+  <div class="field largefield">
     <%= f.label :username, "Full Name" %><br />
     <%= f.text_field :username, :size => 55 %>
   </div>
-  <div class="field">
+  <div class="field largefield">
     <%= f.label :email, "E-Mail Address" %><br />
     <%= f.text_field :email, :size => 55 %>
   </div>
 
-
-	<div id="survey_questions">
+	<!-- Generally this shares the list style with the edit page, since they share the same structure. -->
+	<div id="survey_questions" class="take_survey">
 		<%
 			# Iterate through the questions for this survey
-			
 			@survey.questions.sort{|a,b| a.order <=> b.order}.each_with_index do |question, i|
 		%>
 			<input type="hidden" name="question-<%=i%>-id" value="<%= question.id %>" />
 			<input type="hidden" name="question-<%=i%>-text" value="<%= question.text %>" />
 			<div class="survey-question">
-				<%= question.text %>
+				<strong><%= i+1 %>.</strong> <%= question.text %>
 
 				<div class="survey-question-options">
 					<% question.options.sort{|a,b| a.order <=> b.order}.each_with_index do |option, ii| 
 						fieldname = "question-#{i}-value" + (question.kind == "checkbox" ? "-#{ii}" : '')
 						%>
-						<input type="<%= question.kind %>" value="<%= option.text %>" id="<%= fieldname %>" name="<%= fieldname %>"<%= params[fieldname] == option.text ? " checked='checked'" : "" %>>
-						<label for="<%= fieldname %>"><%= option.text%></label><br />
+						<input type="<%= question.kind %>" value="<%= option.text %>" id="<%= fieldname+ii.to_s %>" name="<%= fieldname %>"<%= params[fieldname] == option.text ? " checked='checked'" : "" %>>
+						<label for="<%= fieldname+ii.to_s %>"><%= option.text%></label><br />
 					<% end %>
 				</div>
 				
